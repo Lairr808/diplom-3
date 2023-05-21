@@ -29,9 +29,10 @@ public class RegisterTest {
 
     @After
     public void teardown() {
+        driver.quit();
         if (accessToken == null) return;
         CreateUser.delete(accessToken);
-        driver.quit();
+
     }
 
     @Test

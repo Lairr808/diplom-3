@@ -16,24 +16,22 @@ public class ProfileTest {
     private User user = User.getDefault();
     private CredentialsUser credentialsUser = CredentialsUser.getDefault();
 
-
-
     @Before
     public void startDriver(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://stellarburgers.nomoreparties.site");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        ValidatableResponse response = CreateUser.create(user);//создаq
+        CreateUser.create(user);//создай
         ValidatableResponse loginResponse = CreateUser.login(CredentialsUser.from(user));//авторизация
         accessToken = loginResponse.extract().path("accessToken");//тащит токен
     }
 
     @After
     public void teardown() {
+        driver.quit();
         if (accessToken == null) return;
         CreateUser.delete(accessToken);
-        driver.quit();
     }
 
     @Test
